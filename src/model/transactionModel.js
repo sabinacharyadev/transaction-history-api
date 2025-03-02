@@ -9,3 +9,8 @@ export const createTransaction = (transactionObj) => {
 export const getUserTransactions = (userId) => {
   return transactionModel.find({ userId: userId });
 };
+
+// Delete Transactions
+export const deleteTransactions = (transactionIds) => {
+  return transactionModel.deleteMany({ _id: transactionIds });
+};

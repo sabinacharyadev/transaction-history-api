@@ -5,6 +5,7 @@ import {
 } from "../utility/responseHelper.js";
 import {
   createTransaction,
+  deleteTransactions,
   getUserTransactions,
 } from "../model/transactionModel.js";
 import { findUserById } from "../model/userModel.js";
@@ -46,6 +47,25 @@ transactionRouter.get("/", async (req, res) => {
       : buildErrorResponse(res, "Cannot fetch transaction!");
   } catch (error) {
     buildErrorResponse(res, "Cannot fetch transaction!");
+  }
+});
+
+// DELETE | Delete Transactions
+transactionRouter.delete("/", async (req, res) => {
+  try {
+    const { authorization } = req.headers;
+
+    const user = await findUserById(authorization);
+
+    if (!user._id) {
+      return buildErrorResponse(res, "You are not authorized user");
+    }
+    const response = await deleteTransactions(req.body);
+    response
+      ? buildSuccessResponse(res, "Transaction Successfully deleted")
+      : buildErrorResponse(res, "Cannot delete transaction!");
+  } catch (error) {
+    buildErrorResponse(res, "Something went wrong");
   }
 });
 
