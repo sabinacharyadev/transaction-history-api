@@ -62,7 +62,11 @@ transactionRouter.delete("/", async (req, res) => {
     }
     const response = await deleteTransactions(req.body);
     response
-      ? buildSuccessResponse(res, "Transaction Successfully deleted")
+      ? buildSuccessResponse(
+          res,
+          response,
+          "Transaction(s) successfully deleted"
+        )
       : buildErrorResponse(res, "Cannot delete transaction!");
   } catch (error) {
     buildErrorResponse(res, "Something went wrong");
