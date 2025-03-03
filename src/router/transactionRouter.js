@@ -15,6 +15,14 @@ const transactionRouter = express.Router();
 // POST | Create a transaction
 transactionRouter.post("/", async (req, res) => {
   try {
+    const { authorization } = req.headers;
+
+    const user = await findUserById(authorization);
+    if (!user._id) {
+      buildErrorResponse(res, "You are not authorized user!");
+      return;
+    }
+
     const transaction = await createTransaction(req.body);
 
     transaction?._id
