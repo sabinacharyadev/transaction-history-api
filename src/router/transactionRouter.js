@@ -69,7 +69,7 @@ transactionRouter.delete("/", async (req, res) => {
       return buildErrorResponse(res, "You are not authorized user");
     }
     const response = await deleteTransactions(req.body);
-    response
+    response?.acknowledged
       ? buildSuccessResponse(
           res,
           response,
